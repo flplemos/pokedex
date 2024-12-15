@@ -50,7 +50,7 @@ function apiPokemon(e) {
         })
         .catch(error => {
             console.error(error);
-            pokemonInfo.innerHTML = `<p>Erro: Pokémon não encontrado. Verifique o nome e tente novamente.</p>`;
+            pokemonInfo.innerHTML = `<p>Erro: Pokémon "${pokemonNameValue}" não encontrado. Verifique o nome e tente novamente.</p>`;
             pokemonImg.src = '';
             pokemonImg.alt = '';
         });
