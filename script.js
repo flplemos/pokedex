@@ -2,13 +2,13 @@ const pokemonName = document.querySelector('#pokemonName');
 const btnSubmit = document.querySelector('.btnSubmit');
 const pokemonImg = document.querySelector('#pokemonImg');
 const form = document.querySelector('#form');
-const pokemonInfo = document.querySelector('#pokemonInfo'); // Certifique-se de que exista no HTML
+const pokemonInfo = document.querySelector('#pokemonInfo'); 
 
 btnSubmit.addEventListener('click', apiPokemon);
 
 function apiPokemon(e) {
-    e.preventDefault(); // Previne o comportamento padrão do botão
-    const pokemonNameValue = pokemonName.value.trim().toLowerCase(); // Nome do Pokémon em minúsculas
+    e.preventDefault(); 
+    const pokemonNameValue = pokemonName.value.trim().toLowerCase(); 
     if (!pokemonNameValue) {
         pokemonInfo.innerHTML = '<p>Por favor, insira o nome de um Pokémon.</p>';
         return;
@@ -22,7 +22,6 @@ function apiPokemon(e) {
             return response.json();
         })
         .then(pokemon => {
-            // Atualiza a imagem
             const officialArtwork = pokemon.sprites.other['official-artwork']?.front_default;
             const homeDefault = pokemon.sprites.other.home?.front_default;
             const defaultSprite = pokemon.sprites.front_default;
@@ -35,9 +34,8 @@ function apiPokemon(e) {
                 pokemonImg.alt = 'Imagem não disponível';
             }
 
-            // Exibe informações detalhadas
             pokemonInfo.innerHTML = `
-                <div id="infoPoke"><p><strong>Nome:</strong> ${pokemon.name}</p>
+                <div id="infoPoke" class="pokemon-info"><p><strong>Nome:</strong> ${pokemon.name}</p>
                 <p><strong>ID:</strong> ${pokemon.id}</p>
                 <p><strong>Altura:</strong> ${pokemon.height / 10} m</p>
                 <p><strong>Peso:</strong> ${pokemon.weight / 10} kg</p>
@@ -60,10 +58,9 @@ function apiPokemon(e) {
 
 
 function carregarPokemonPadrao() {
-    const pokemonPadrao = 'gengar'; // Pokémon padrão (pode ser qualquer nome)
-    pokemonName.value = pokemonPadrao; // Definir o valor do campo de input
-    apiPokemon(new Event('click')); // Simula o clique para buscar o Pokémon
+    const pokemonPadrao = 'gengar';
+    pokemonName.value = pokemonPadrao; 
+    apiPokemon(new Event('click')); 
 }
 
-// Chama a função para carregar o Pokémon padrão quando a página é carregada
 window.onload = carregarPokemonPadrao;
