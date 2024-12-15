@@ -35,7 +35,7 @@ function apiPokemon(e) {
             }
 
             pokemonInfo.innerHTML = `
-                <div id="infoPoke" class="pokemon-info"><p><strong>Nome:</strong> ${pokemon.name}</p>
+                <div class="pokemon-info"><p><strong>Nome:</strong> ${pokemon.name}</p>
                 <p><strong>ID:</strong> ${pokemon.id}</p>
                 <p><strong>Altura:</strong> ${pokemon.height / 10} m</p>
                 <p><strong>Peso:</strong> ${pokemon.weight / 10} kg</p>
