@@ -31,6 +31,12 @@ body{
 
 span{
     font-family: 'pokeSolid';
+    color: yellow;
+    text-shadow: 
+        1px 1px 0px blue,   /* Contorno superior esquerdo */
+        -1px 1px 0px blue,  /* Contorno inferior esquerdo */
+        1px -1px 0px blue,  /* Contorno superior direito */
+        -1px -1px 0px blue; /* Contorno inferior direito */
 }
 
 #pokemonInfo{
@@ -40,12 +46,19 @@ span{
 
 .titulo{
     font-family: 'pokeSolid';
+    color: yellow;
+    text-shadow: 
+        2px 2px 0px blue,   /* Contorno superior esquerdo */
+        -2px 2px 0px blue,  /* Contorno inferior esquerdo */
+        2px -2px 0px blue,  /* Contorno superior direito */
+        -2px -2px 0px blue; /* Contorno inferior direito */
     
 }
 
 .subtitulo {
     font-size: 0.8rem;
     font-family: 'pokeSolid';
+    
 }
 
 .container {
