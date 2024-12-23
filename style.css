@@ -1,9 +1,9 @@
 @font-face {
-    font-family: 'pokeSolid'; /* Nome personalizado para a fonte */
+    font-family: 'pokeSolid'; 
     src: url('./font/Pokemon\ Solid.ttf') format('truetype'); 
 }
 @font-face {
-    font-family: 'pokeVazads'; /* Nome personalizado para a fonte */
+    font-family: 'pokeVazads'; 
     src: url('./font/Pokemon\ Hollow.ttf') format('truetype'); 
 }
 
@@ -33,10 +33,10 @@ span{
     font-family: 'pokeSolid';
     color: yellow;
     text-shadow: 
-        1px 1px 0px blue,   /* Contorno superior esquerdo */
-        -1px 1px 0px blue,  /* Contorno inferior esquerdo */
-        1px -1px 0px blue,  /* Contorno superior direito */
-        -1px -1px 0px blue; /* Contorno inferior direito */
+        1px 1px 0px blue,   
+        -1px 1px 0px blue, 
+        1px -1px 0px blue,  
+        -1px -1px 0px blue; 
 }
 
 #pokemonInfo{
@@ -48,10 +48,10 @@ span{
     font-family: 'pokeSolid';
     color: yellow;
     text-shadow: 
-        2px 2px 0px blue,   /* Contorno superior esquerdo */
-        -2px 2px 0px blue,  /* Contorno inferior esquerdo */
-        2px -2px 0px blue,  /* Contorno superior direito */
-        -2px -2px 0px blue; /* Contorno inferior direito */
+        2px 2px 0px blue,   
+        -2px 2px 0px blue,  
+        2px -2px 0px blue, 
+        -2px -2px 0px blue; 
     
 }
 
@@ -85,6 +85,13 @@ ul {
 .pokemon-info {
     animation: fadeIn 0.6s ease-out; 
 }
+
+#statsChart {
+    margin-top: 1rem;
+    
+    
+}
+
 
 #pokemonImg {
     width: 80%; 
