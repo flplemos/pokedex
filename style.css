@@ -1,114 +1,474 @@
-@font-face {
-    font-family: 'pokeSolid'; 
-    src: url('./font/Pokemon\ Solid.ttf') format('truetype'); 
-}
-@font-face {
-    font-family: 'pokeVazads'; 
-    src: url('./font/Pokemon\ Hollow.ttf') format('truetype'); 
+/* ---------- Tokens ---------- */
+:root {
+    --bg: #f6f7f9;
+    --surface: #ffffff;
+    --surface-2: #eef0f3;
+    --text: #16181d;
+    --muted: #5b6270;
+    --border: #e3e6eb;
+    --accent: #c62828;
+    --accent-text: #ffffff;
+    --focus: #2563c9;
+    --shadow: 0 1px 2px rgb(16 24 40 / .06), 0 8px 24px rgb(16 24 40 / .08);
+    --radius: 20px;
+    --type: #5f6b80;
+    --type-2: var(--type);
+    --tinta: 26%;
+    --font-titulo: Fredoka, "Nunito", system-ui, sans-serif;
+    --font-corpo: Nunito, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+    color-scheme: light;
 }
 
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #0f1115;
+        --surface: #181b21;
+        --surface-2: #22262e;
+        --text: #eef0f3;
+        --muted: #a3aab6;
+        --border: #2c313a;
+        --focus: #7aa7ff;
+        --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 8px 24px rgb(0 0 0 / .35);
+        --tinta: 40%;
+        color-scheme: dark;
+    }
+}
 
-*{
+:root[data-theme="dark"] {
+    --bg: #0f1115;
+    --surface: #181b21;
+    --surface-2: #22262e;
+    --text: #eef0f3;
+    --muted: #a3aab6;
+    --border: #2c313a;
+    --focus: #7aa7ff;
+    --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 8px 24px rgb(0 0 0 / .35);
+    --tinta: 40%;
+    color-scheme: dark;
+}
+
+/* ---------- Base ---------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+* { margin: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    background: var(--bg);
+    color: var(--text);
+    font: 400 1rem/1.5 var(--font-corpo);
+    -webkit-font-smoothing: antialiased;
+}
+
+img, svg, canvas { display: block; max-width: 100%; }
+
+button, input { font: inherit; color: inherit; }
+
+a { color: inherit; }
+
+:focus-visible {
+    outline: 3px solid var(--focus);
+    outline-offset: 2px;
+}
+
+[hidden] { display: none !important; }
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+}
+
+/* ---------- Topo ---------- */
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: .75rem 1rem;
+}
+
+.marca {
+    display: inline-flex;
+    align-items: center;
+    gap: .625rem;
+    min-height: 44px;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.marca-icone { width: 32px; height: 32px; }
+
+.marca-texto {
+    font-family: var(--font-titulo);
+    font-weight: 600;
+    font-size: 1.25rem;
+    letter-spacing: -.01em;
+}
+
+.marca-texto small {
+    display: block;
+    font-family: var(--font-corpo);
+    font-weight: 500;
+    font-size: .75rem;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: -.15rem;
+}
+
+.botao-icone {
+    display: inline-grid;
+    place-items: center;
+    width: 44px;
+    height: 44px;
+    flex: none;
     padding: 0;
-    margin: 0;
-    box-sizing: border-box;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    cursor: pointer;
+    transition: background-color .15s, border-color .15s;
 }
 
-body{
+.botao-icone:hover { background: var(--surface-2); }
+
+.botao-icone:disabled { opacity: .4; cursor: not-allowed; }
+
+.botao-icone svg {
+    width: 20px;
+    height: 20px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+/* Mostra o ícone do tema para o qual o botão vai mudar. */
+.icone-sol { display: none !important; }
+:root[data-theme="dark"] .icone-sol { display: block !important; }
+:root[data-theme="dark"] .icone-lua { display: none !important; }
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .icone-sol { display: block !important; }
+    :root:not([data-theme="light"]) .icone-lua { display: none !important; }
+}
+
+/* ---------- Conteúdo ---------- */
+.conteudo {
+    flex: 1;
+    width: 100%;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: .5rem 1rem 2rem;
+}
+
+/* Busca */
+.busca { margin-bottom: 1.25rem; }
+
+.busca-rotulo {
+    display: block;
+    font-weight: 600;
+    margin-bottom: .5rem;
+}
+
+.busca-linha {
     display: flex;
-    align-items: center;
-    flex-direction: column;
-    font-family: "Roboto", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-    background-image: url('img/thunderstorm-illustration-digital-art-style.jpg');
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    height: 1343px;
+    gap: .5rem;
 }
 
-span{
-    font-family: 'pokeSolid';
-    color: yellow;
-    text-shadow: 
-        1px 1px 0px blue,   
-        -1px 1px 0px blue, 
-        1px -1px 0px blue,  
-        -1px -1px 0px blue; 
+.busca input {
+    flex: 1;
+    min-width: 0;
+    min-height: 48px;
+    padding: .75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--surface);
+    font-size: 1rem;
 }
 
-#pokemonInfo{
-    display: flex;
-    flex-direction: column;
+.busca input::placeholder { color: var(--muted); opacity: 1; }
+
+.busca input:focus-visible { outline-offset: 0; border-color: var(--focus); }
+
+.botao-primario {
+    min-height: 48px;
+    padding: 0 1.25rem;
+    border: 0;
+    border-radius: 12px;
+    background: var(--accent);
+    color: var(--accent-text);
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter .15s;
 }
 
-.titulo{
-    font-family: 'pokeSolid';
-    color: yellow;
-    text-shadow: 
-        2px 2px 0px blue,   
-        -2px 2px 0px blue,  
-        2px -2px 0px blue, 
-        -2px -2px 0px blue; 
-    
+.botao-primario:hover { filter: brightness(1.08); }
+
+.busca-dica {
+    margin-top: .5rem;
+    font-size: .875rem;
+    color: var(--muted);
 }
 
-.subtitulo {
-    font-size: 0.8rem;
-    font-family: 'pokeSolid';
-    
-}
+/* Status: carregando / erro / não encontrado */
+.status:empty { display: none; }
 
-.container {
-    background-color: rgba(255, 255, 255, 0.712);
-    align-items: center;
-    justify-content: center;
+.status {
+    display: grid;
+    justify-items: center;
+    gap: .75rem;
+    padding: 2.5rem 1rem;
+    border: 1px dashed var(--border);
+    border-radius: var(--radius);
     text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); 
-    margin-top: 150px;
-    padding: 1rem;
-    
+    color: var(--muted);
 }
 
-ul {
+.status strong { color: var(--text); font-size: 1.125rem; }
+
+.status-acoes {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .5rem;
+}
+
+.chip {
+    min-height: 44px;
+    padding: 0 1rem;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    cursor: pointer;
+}
+
+.chip:hover { background: var(--surface-2); }
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: girar .8s linear infinite;
+}
+
+@keyframes girar { to { transform: rotate(360deg); } }
+
+/* ---------- Cartão ---------- */
+.cartao {
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--surface);
+    box-shadow: var(--shadow);
+    animation: surgir .35s ease-out;
+}
+
+.cartao[aria-busy="true"] { opacity: .55; transition: opacity .2s; }
+
+@keyframes surgir {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+}
+
+.cartao-topo {
+    position: relative;
+    display: grid;
+    place-items: center;
+    padding: 1rem 3.5rem;
+    background:
+        radial-gradient(circle at 50% 55%, color-mix(in srgb, var(--type) 38%, transparent) 0 34%, transparent 35%),
+        linear-gradient(160deg, color-mix(in srgb, var(--type) var(--tinta), var(--surface)), color-mix(in srgb, var(--type-2) calc(var(--tinta) / 2), var(--surface)));
+}
+
+#pokemonImg {
+    width: min(100%, 280px);
+    height: auto;
+    aspect-ratio: 1;
+    object-fit: contain;
+    filter: drop-shadow(0 12px 16px rgb(0 0 0 / .18));
+}
+
+.botao-nav {
+    position: absolute;
+    top: 50%;
+    translate: 0 -50%;
+    background: color-mix(in srgb, var(--surface) 85%, transparent);
+}
+
+#anterior { left: .5rem; }
+#proximo { right: .5rem; }
+
+.cartao-corpo {
+    display: grid;
+    gap: 1.5rem;
+    padding: 1.25rem 1rem 1.5rem;
+}
+
+.identidade { text-align: center; }
+
+.numero {
+    font-variant-numeric: tabular-nums;
+    font-weight: 600;
+    color: var(--muted);
+}
+
+.nome {
+    font-family: var(--font-titulo);
+    font-weight: 600;
+    font-size: clamp(1.75rem, 6vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -.02em;
+    text-transform: capitalize;
+    overflow-wrap: anywhere;
+}
+
+.tipos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: .5rem;
+    margin-top: .75rem;
+    padding: 0;
     list-style: none;
 }
 
-.container img {
-    width: 80%;
+.tipo {
+    padding: .3rem .875rem;
+    border-radius: 999px;
+    background: var(--cor);
+    color: #fff;
+    font-size: .875rem;
+    font-weight: 600;
+    letter-spacing: .02em;
 }
 
-
-.pokemon-info {
-    animation: fadeIn 0.6s ease-out; 
+/* Fatos */
+.fatos {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: .75rem;
 }
 
-#statsChart {
-    margin-top: 1rem;
-    
-    
+.fatos > div {
+    padding: .75rem 1rem;
+    border-radius: 14px;
+    background: var(--surface-2);
 }
 
+.fatos-largo { grid-column: 1 / -1; }
 
-#pokemonImg {
-    width: 80%; 
-    max-width: 300px;
-    margin-top: 20px; 
-    opacity: 0; 
-    animation: fadeIn 0.6s ease-out forwards; 
+.fatos dt {
+    font-size: .8125rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--muted);
 }
 
+.fatos dd {
+    font-size: 1.125rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
 
-@keyframes fadeIn {
-    0% {
-        opacity: 0;
-        transform: translateY(20px); 
+.habilidades {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem 1rem;
+    padding: 0;
+    list-style: none;
+    text-transform: capitalize;
+}
+
+.habilidades .oculta {
+    font-size: .8125rem;
+    font-weight: 500;
+    color: var(--muted);
+    text-transform: none;
+}
+
+/* Stats */
+.stats-cabecalho {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: .5rem;
+}
+
+.stats h2 { font-family: var(--font-titulo); font-weight: 600; font-size: 1.25rem; }
+
+.stats-total { color: var(--muted); }
+
+.stats-total strong { color: var(--text); font-variant-numeric: tabular-nums; }
+
+.stats-grafico {
+    position: relative;
+    height: 260px;
+}
+
+/* ---------- Rodapé ---------- */
+.rodape {
+    padding: 1.5rem 1rem 2rem;
+    text-align: center;
+    font-size: .875rem;
+    color: var(--muted);
+}
+
+.rodape a {
+    display: inline-block;
+    padding: .75rem .25rem;
+    color: var(--text);
+    text-underline-offset: 3px;
+}
+
+/* ---------- Desktop ---------- */
+@media (min-width: 760px) {
+    .conteudo { padding-top: 1.5rem; }
+
+    .cartao {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
     }
-    100% {
-        opacity: 1;
-        transform: translateY(0); 
+
+    .cartao-topo {
+        padding: 2rem 3.5rem;
+        min-height: 100%;
     }
+
+    #pokemonImg { width: min(100%, 320px); }
+
+    .cartao-corpo { padding: 2rem; align-content: start; }
+
+    .identidade { text-align: left; }
+
+    .tipos { justify-content: flex-start; }
+}
+
+/* ---------- Movimento reduzido ---------- */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .spinner { border-top-color: var(--border); border-left-color: var(--accent); }
 }
